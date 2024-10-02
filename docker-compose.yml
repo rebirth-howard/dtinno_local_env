@@ -1,0 +1,20 @@
+services:
+  db_dtinno:
+    container_name: db_dtinno_mysql
+    build:
+      dockerfile: Dockerfile
+      context: ./db
+    environment:
+      - MYSQL_DATABASE=${MYSQL_APP_DB}
+      - MYSQL_USER=${MYSQL_APP_USER}
+      - MYSQL_PASSWORD=${MYSQL_APP_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_APP_ROOT_PASSWORD}
+    volumes:
+      - db_dtinno:/var/lib/mysql
+      - ./db/config:/etc/mysql/conf.d
+    ports:
+      - "${MYSQL_APP_PORT}:3306"
+    restart: unless-stopped
+
+volumes:
+  db_dtinno:
